@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    [SerializeField] private int width = 6;
-    [SerializeField] private int height = 10;
+    [SerializeField] public int width = 6;
+    [SerializeField] public int height = 10;
     [SerializeField] private int startSize = 4;
     [SerializeField] private float stepDuration = 0.5f;
     [SerializeField] private Joint jointPrefab;
@@ -15,15 +15,22 @@ public class Board : MonoBehaviour
     private bool isSet = false;
     private bool isStarted = false;
 
+    static Board instance;
+    public static Board Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<Board>();
+            }
+            return instance;
+        }
+    }
+
     void Start()
     {
-        for (int x = startSize - 1; x >= 0; x--)
-        {
-            Vector2 pos = new Vector2(x, 0);
-            Joint joint = Instantiate(jointPrefab, pos, Quaternion.identity);
-            joints.Add(joint);
-            isSet = true;
-        }
+        CreateStartingSnake();
     }
 
     void Update()
@@ -37,6 +44,26 @@ public class Board : MonoBehaviour
             MoveSnake();
             nextStep = Time.time + stepDuration;
         }
+    }
+    private void CreateStartingSnake()
+    {
+        if (width < startSize)
+        {
+            int startX = 2 * width - startSize;
+            for (int x = startX; x < width; x++)
+            {
+                Vector2 pos = new Vector2(x, 1);
+                Joint joint = Instantiate(jointPrefab, pos, Quaternion.identity);
+                joints.Add(joint);
+            }
+        }
+        for (int x = width - 1; x >= 0; x--)
+        {
+            Vector2 pos = new Vector2(x, 0);
+            Joint joint = Instantiate(jointPrefab, pos, Quaternion.identity);
+            joints.Add(joint);
+        }
+        isSet = true;
     }
 
     private void MoveSnake()
@@ -59,7 +86,11 @@ public class Board : MonoBehaviour
             }
             else if (j.transform.position.x == width - 1 || j.transform.position.x == 0)
             {
-                j.transform.position = new Vector2(j.transform.position.x, j.transform.position.y + 1);
+                if (j.transform.position.y <= height - 1)
+                {
+                    j.transform.position = new Vector2(j.transform.position.x, j.transform.position.y + 1);
+                }
+
             }
         }
     }

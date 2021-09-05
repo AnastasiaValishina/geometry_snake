@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ColorType
+{
+    White,
+    Black,
+    Red,
+}
 public class Joint : MonoBehaviour
 {
-    // Start is called before the first frame update
+    ColorType colorType;
+
     void Start()
     {
         

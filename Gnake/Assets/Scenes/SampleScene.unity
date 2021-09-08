@@ -152,10 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eeb5abe08ff5c04db5f3f7fe26ba77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 9
-  height: 18
-  startSize: 6
-  stepDuration: 0.1
+  width: 8
+  height: 14
+  startSize: 7
+  colors: 020000000400000003000000
+  stepDuration: 0.25
+  newJointDelay: 0.5
   jointPrefab: {fileID: 3972327191071351187, guid: 71917c23c4b769e4db214530c492a089, type: 3}
 --- !u!4 &367354870
 Transform:
@@ -213,7 +215,7 @@ MonoBehaviour:
   cameraOffset: -10
   aspectRatio: 0.5625
   padding: 1
-  yOffset: 2
+  yOffset: 0.5
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
